@@ -35,12 +35,22 @@ public class FilmeController : ControllerBase
         return CreatedAtAction(nameof(RecuperaFilmePorId), new { id = filme.Id }, filme);
     }
 
+    /// <summary>
+    /// Lista os filmes cadastrados no banco de dados
+    /// </summary>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso a consulta seja feita com sucesso</response>
     [HttpGet]
     public IEnumerable<ReadFilmeDto> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
         return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take));
     }
 
+    /// <summary>
+    /// Lista o filme por pesquisado por Id
+    /// </summary>
+    /// <returns>IActionResult</returns>
+    /// <response code="200">Caso a consulta seja feita com sucesso</response>
     [HttpGet("{id}")]
     public IActionResult RecuperaFilmePorId(int id)
     {
@@ -50,6 +60,12 @@ public class FilmeController : ControllerBase
         return Ok(filmeDto);
     }
 
+    /// <summary>
+    /// Atualiza um filme no banco de dados
+    /// </summary>
+    /// <param name="filmeDto">Objeto com os campos necessários para a atualização de um filme</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="204">Caso atualização seja feita com sucesso</response>
     [HttpPut("{id}")]
     public IActionResult AtualizaFilme(int id, [FromBody] UpdateFilmeDto filmeDto)
     {
@@ -60,6 +76,11 @@ public class FilmeController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Atualiza um filme no banco de dados
+    /// </summary>
+    /// <returns>IActionResult</returns>
+    /// <response code="204">Caso atualização seja feita com sucesso</response>
     [HttpPatch("{id}")]
     public IActionResult AtualizaFilmeParcial(int id, JsonPatchDocument<UpdateFilmeDto> patch)
     {
@@ -77,6 +98,11 @@ public class FilmeController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Deleta um filme do banco de dados
+    /// </summary>
+    /// <returns>IActionResult</returns>
+    /// <response code="204">Caso a exclusão seja feita com sucesso</response>
     [HttpDelete("{id}")]
     public IActionResult DeletaFilme(int id)
     {
