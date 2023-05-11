@@ -6,7 +6,7 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionStr = builder.Configuration.GetConnectionString("FilmeConnection");
-builder.Services.AddDbContext<FilmeContext>( opts => opts.UseMySql(connectionStr, ServerVersion.AutoDetect(connectionStr) ));
+builder.Services.AddDbContext<FilmeContext>( opts => opts.UseLazyLoadingProxies().UseMySql(connectionStr, ServerVersion.AutoDetect(connectionStr) ));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers().AddNewtonsoftJson();
@@ -32,4 +32,4 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-app.Run();
+app.Run(); 
